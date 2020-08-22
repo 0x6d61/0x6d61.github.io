@@ -1,32 +1,88 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+  <div class="console">
+    <div v-for="(r,index) in result" :key="index">
+      <span class="prmptColor">
+        {{ r.prmpt }}
+        <span class="commandResult">~ $ {{r.command}}</span>
+      </span>
+      <div>
+        <span
+          v-if="r.command.includes('cat')"
+          class="commandResult"
+          style="content:'\A' ;white-space: pre ;"
+        >{{r.result}}</span>
+      <span v-else class="commandResult">{{r.result}}</span>
+      </div>
     </div>
-    <router-view />
+    <label>
+      <span class="prmptColor">
+        {{ prmpt }}
+        <span style="color:white">~ $ </span>
+      </span>
+      <input
+        autofocus
+        class="commandInput"
+        type="text"
+        v-model="command"
+        style="font-family: monospace;font-size:16px;"
+        v-on:keydown.enter="execCommand(command)"
+      />
+    </label>
   </div>
 </template>
 
+
+<script>
+import dayjs from "dayjs";
+
+export default {
+  name: "App",
+  data() {
+    return {
+      nowTime: dayjs(Date.now()).format("HH:mm:ss"),
+      command: ""
+    };
+  },
+  computed: {
+    prmpt() {
+      return `0x6d61@wei ${this.nowTime}`;
+    },
+    history() {
+      return this.$store.state.history;
+    },
+    result() {
+      return this.$store.state.result;
+    }
+  },
+  methods: {
+    execCommand(command) {
+      this.$store.dispatch("execCommand", { prmpt: this.prmpt, command });
+      this.command = "";
+    }
+  }
+};
+</script>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+body {
+  background: black;
+  font-family: monospace;
+  font-size:16px;
 }
 
-#nav {
-  padding: 30px;
+.prmptColor {
+  color: greenyellow;
 }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+.commandResult {
+  color: white;
 }
 
-#nav a.router-link-exact-active {
-  color: #42b983;
+.commandInput {
+  outline: none;
+  background: black;
+  color: white;
+  border: none;
+  min-width: 70%;
 }
 </style>
