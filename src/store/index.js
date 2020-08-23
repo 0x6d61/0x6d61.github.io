@@ -16,7 +16,7 @@ const fileConstracut = {
 今はアプリケーションエンジニアでバックエンドとフロントエンドをフラフラしてます。
 主に使用している言語はPython,JavaScriptです。
         `,
-        "skil.txt": `
+        "skill.txt": `
 業務経験あり || できる
 
 - AWS
