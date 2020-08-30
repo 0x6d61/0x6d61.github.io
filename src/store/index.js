@@ -9,7 +9,7 @@ const fileConstracut = {
   "/": {
     "home": {
       "0x6d61": {
-        "file": ["about.txt", "skil.txt", "icon.jpg"],
+        "file": ["about.txt", "skill.txt", "icon.jpg"],
         "about.txt": `
 北海道に住んでいる0x6d61です。
 インフラやセキュリティとか仕事でやってました。
