@@ -12,3 +12,4 @@ screen_name: **0x6d61**
 ## Recent Posts
 
 - [[今になってブログを書く理由]]
+- [[海外製BadUSBデバイスとJISキーボードの罠]]
