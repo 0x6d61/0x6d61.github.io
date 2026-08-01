@@ -33,8 +33,13 @@ html {
 body {
   margin: 0;
   background: var(--bg);
+  background-image: radial-gradient(circle at 80% 0%, color-mix(in srgb, var(--accent) 8%, transparent), transparent 32rem);
   color: var(--text);
   font-size: 1rem;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--accent) 28%, transparent);
 }
 
 a {
@@ -66,11 +71,17 @@ a:hover { color: var(--accent); }
 }
 
 .site-header {
+  position: sticky;
+  z-index: 5;
+  top: 0;
   min-height: 5.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid var(--line);
+  background: var(--bg);
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(14px);
 }
 
 .brand {
@@ -108,7 +119,7 @@ nav a { color: var(--muted); font-size: .9rem; text-decoration: none; }
   line-height: 1.08;
 }
 
-.hero h1 { font-size: clamp(3rem, 8vw, 6.7rem); }
+.hero h1 { font-size: clamp(3rem, 8vw, 6.7rem); text-wrap: balance; }
 .hero > p:last-child { max-width: 35rem; margin: 2rem 0 0; color: var(--muted); font-size: 1.1rem; }
 
 .latest { padding-bottom: clamp(5rem, 10vw, 8rem); }
@@ -131,9 +142,13 @@ nav a { color: var(--muted); font-size: .9rem; text-decoration: none; }
   grid-template-columns: 7.5rem 1fr auto;
   gap: 1.5rem;
   align-items: baseline;
-  padding: 1.4rem .15rem;
+  margin-inline: -.75rem;
+  padding: 1.4rem .75rem;
+  border-radius: .35rem;
   text-decoration: none;
+  transition: color 150ms ease, background-color 150ms ease;
 }
+.post-list a:hover { background: var(--surface); }
 .post-list time { color: var(--muted); font-size: .82rem; font-variant-numeric: tabular-nums; }
 .post-list a > span:nth-child(2) { font-weight: 600; }
 .arrow { color: var(--muted); }
