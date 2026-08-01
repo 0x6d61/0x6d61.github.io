@@ -1,18 +1,48 @@
-# Quartz v4
+# Mind Injection
 
-> “[One] who works with the door open gets all kinds of interruptions, but [they] also occasionally gets clues as to what the world is and what might be important.” — Richard Hamming
+0x6d61の個人ブログです。Markdownをpushすると、GitHub Actionsが静的HTMLを生成してGitHub Pagesへ公開します。
 
-Quartz is a set of tools that helps you publish your [digital garden](https://jzhao.xyz/posts/networked-thought) and notes as a website for free.
-Quartz v4 features a from-the-ground rewrite focusing on end-user extensibility and ease-of-use.
+## 記事を書く
 
-🔗 Read the documentation and get started: https://quartz.jzhao.xyz/
+`content/` にMarkdownファイルを追加します。
 
-[Join the Discord Community](https://discord.gg/cRFFHYye7t)
+```md
+---
+title: 記事タイトル
+date: 2026-08-01
+tags:
+  - Security
+---
 
-## Sponsors
+ここに本文を書きます。
+```
 
-<p align="center">
-  <a href="https://github.com/sponsors/jackyzha0">
-    <img src="https://cdn.jsdelivr.net/gh/jackyzha0/jackyzha0/sponsorkit/sponsors.svg" />
-  </a>
-</p>
+画像は `content/assets/` に置き、通常のMarkdownまたはObsidian記法で参照できます。
+
+```md
+![説明](assets/example.png)
+![[example.png]]
+```
+
+記事用ブランチを作ってPull Requestを開くと、サイトが正しく生成できるか自動確認されます。Pull Requestを`main`へマージすると公開され、記事一覧、タグ、RSS、サイトマップも自動更新されます。
+
+```sh
+git switch main
+git pull
+git switch -c article/記事名
+# content/へ記事を追加
+git add content
+git commit -m "記事を追加"
+git push -u origin article/記事名
+```
+
+## ローカルで確認する
+
+Node.js 22以降を用意して、次を実行します。
+
+```sh
+corepack npm install
+corepack npm run dev
+```
+
+本番用の生成確認は `corepack npm run build` で行えます。生成物は `_site/` に出力されます。

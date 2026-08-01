@@ -1,0 +1,35 @@
+---
+layout: base.njk
+title: Mind Injection
+description: サイバーセキュリティと技術の記録
+permalink: /index.html
+---
+<section class="hero">
+  <p class="eyebrow">0x6d61 / Security Engineer</p>
+  <h1>考えたことを、<br>忘れないうちに。</h1>
+  <p>サイバーセキュリティを中心に、技術や読んだ本について書く個人ブログです。</p>
+</section>
+
+<section class="latest" aria-labelledby="latest-heading">
+  <div class="section-heading">
+    <h2 id="latest-heading">新しい記事</h2>
+    <a href="/archive/">すべて見る →</a>
+  </div>
+  <ol class="post-list">
+    {% for post in collections.posts | slice(0, 5) %}
+      <li>
+        <a href="{{ post.url }}">
+          <time datetime="{{ post.date | isoDate }}">{{ post.date | dateJa }}</time>
+          <span>{{ post.data.title }}</span>
+          <span class="arrow" aria-hidden="true">↗</span>
+        </a>
+      </li>
+    {% endfor %}
+  </ol>
+</section>
+
+<section class="about" aria-labelledby="about-heading">
+  <p class="eyebrow">About</p>
+  <h2 id="about-heading">0x6d61</h2>
+  <p>事業会社のCSIRTでセキュリティエンジニアとして働いています。ルアーフィッシングを楽しんだり、行きつけのバーで酒を飲んだりしています。新しい物好きで飽き性。</p>
+</section>

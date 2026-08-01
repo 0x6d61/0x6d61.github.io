@@ -1,5 +1,6 @@
 ---
 title: 海外製BadUSBデバイスとJISキーボードの罠
+date: 2025-08-13
 tags:
   - BadUSB
   - セキュリティ
