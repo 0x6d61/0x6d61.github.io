@@ -95,6 +95,7 @@ export default function (eleventyConfig) {
     url: siteUrl,
     author: "0x6d61",
   })
+  eleventyConfig.addGlobalData("buildId", Date.now().toString(36))
 
   return {
     dir: {
