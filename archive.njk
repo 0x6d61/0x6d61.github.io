@@ -1,0 +1,22 @@
+---
+layout: base.njk
+title: 記事一覧
+description: Mind Injectionの記事一覧
+permalink: /archive/index.html
+---
+<header class="page-header">
+  <p class="eyebrow">Archive</p>
+  <h1>記事一覧</h1>
+  <p>{{ collections.posts.length }}件の記事</p>
+</header>
+<ol class="post-list post-list-wide">
+  {% for post in collections.posts %}
+    <li>
+      <a href="{{ post.url }}">
+        <time datetime="{{ post.date | isoDate }}">{{ post.date | dateJa }}</time>
+        <span>{{ post.data.title }}</span>
+        <span class="arrow" aria-hidden="true">↗</span>
+      </a>
+    </li>
+  {% endfor %}
+</ol>

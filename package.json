@@ -1,0 +1,17 @@
+{
+  "name": "mind-injection",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "npm@12.0.2",
+  "scripts": {
+    "clean": "node scripts/clean.js",
+    "build": "node scripts/clean.js && eleventy",
+    "dev": "eleventy --serve",
+    "check": "eleventy --dryrun"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "3.1.6",
+    "markdown-it": "14.3.0"
+  }
+}
