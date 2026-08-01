@@ -16,14 +16,16 @@ permalink: /index.html
     <a href="/archive/">すべて見る →</a>
   </div>
   <ol class="post-list">
-    {% for post in collections.posts | slice(0, 5) %}
-      <li>
-        <a href="{{ post.url }}">
-          <time datetime="{{ post.date | isoDate }}">{{ post.date | dateJa }}</time>
-          <span>{{ post.data.title }}</span>
-          <span class="arrow" aria-hidden="true">↗</span>
-        </a>
-      </li>
+    {% for post in collections.posts %}
+      {% if loop.index <= 5 %}
+        <li>
+          <a href="{{ post.url }}">
+            <time datetime="{{ post.date | isoDate }}">{{ post.date | dateJa }}</time>
+            <span>{{ post.data.title }}</span>
+            <span class="arrow" aria-hidden="true">↗</span>
+          </a>
+        </li>
+      {% endif %}
     {% endfor %}
   </ol>
 </section>
