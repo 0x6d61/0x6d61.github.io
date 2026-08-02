@@ -44,9 +44,60 @@ function addObsidianSyntax(md) {
   })
 }
 
+function addCallouts(md) {
+  const callouts = {
+    WARNING: { label: "WARNING", icon: "!" },
+    CAUTION: { label: "CAUTION", icon: "×" },
+    IMPORTANT: { label: "IMPORTANT", icon: "◆" },
+  }
+
+  md.core.ruler.after("inline", "callouts", (state) => {
+    const { tokens } = state
+
+    for (let index = 0; index < tokens.length; index += 1) {
+      if (tokens[index].type !== "blockquote_open") continue
+
+      const paragraph = tokens[index + 1]
+      const inline = tokens[index + 2]
+      if (paragraph?.type !== "paragraph_open" || inline?.type !== "inline") continue
+
+      const match = inline.content.match(/^\[!(WARNING|CAUTION|IMPORTANT)\](?:[ \t]*\n|[ \t]+|$)/i)
+      if (!match) continue
+
+      const type = match[1].toUpperCase()
+      inline.content = inline.content.slice(match[0].length)
+      inline.children = []
+      md.inline.parse(inline.content, md, state.env, inline.children)
+
+      tokens[index].type = "callout_open"
+      tokens[index].tag = "aside"
+      tokens[index].meta = { calloutType: type }
+
+      let depth = 1
+      for (let closeIndex = index + 1; closeIndex < tokens.length; closeIndex += 1) {
+        if (tokens[closeIndex].type === "blockquote_open") depth += 1
+        if (tokens[closeIndex].type === "blockquote_close") depth -= 1
+        if (depth !== 0) continue
+
+        tokens[closeIndex].type = "callout_close"
+        tokens[closeIndex].tag = "aside"
+        break
+      }
+    }
+  })
+
+  md.renderer.rules.callout_open = (tokens, index) => {
+    const type = tokens[index].meta.calloutType
+    const { label, icon } = callouts[type]
+    return `<aside class="callout callout-${type.toLowerCase()}" role="note" aria-label="${label}">\n<p class="callout-title"><span class="callout-icon" aria-hidden="true">${icon}</span>${label}</p>\n`
+  }
+  md.renderer.rules.callout_close = () => "</aside>\n"
+}
+
 export default function (eleventyConfig) {
   const md = markdownIt({ html: false, linkify: true, typographer: false })
   addObsidianSyntax(md)
+  addCallouts(md)
   eleventyConfig.setLibrary("md", md)
 
   eleventyConfig.addPassthroughCopy({ "content/assets": "assets" })
